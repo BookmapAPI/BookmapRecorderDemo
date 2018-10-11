@@ -6,7 +6,6 @@ repositories {
 }
 
 dependencies {
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.4'
     compile files('lib/BookmapRecorder.jar')
     compile files('lib/BookmapRecorder-javadoc.jar')
 }
