@@ -3,18 +3,19 @@ package bookmaprecorderdemo.utils;
 public class IndicatorsPack {
 
 	private final IntrinsicPrice intrinsicPrice = new IntrinsicPrice();
+	private final double[] intrinsicParams;
 	private final DynamicAverage avgSize = new DynamicAverage();
 	private final Ema[] emaBuy;
 	private final Ema[] emaSell;
 
-	public IndicatorsPack(int numVolumeEma, long minEmaHalfLifeNanoseconds, double stepMultEmaHalfLife) {
-		emaBuy = new Ema[numVolumeEma];
-		emaSell = new Ema[numVolumeEma];
-		long halfLife = minEmaHalfLifeNanoseconds;
-		for (int i = 0; i < numVolumeEma; i++) {
-			emaBuy[i] = new Ema(halfLife);
-			emaSell[i] = new Ema(halfLife);
-			halfLife = Math.round(halfLife * stepMultEmaHalfLife);
+	public IndicatorsPack(double[] intrinsicParams, double[] emaParams) {
+		this.intrinsicParams = intrinsicParams;
+		int n = emaParams.length;
+		emaBuy = new Ema[n];
+		emaSell = new Ema[n];
+		for (int i = 0; i < n; i++) {
+			emaBuy[i] = new Ema(emaParams[i]);
+			emaSell[i] = new Ema(emaParams[i]);
 		}
 	}
 
@@ -30,14 +31,14 @@ public class IndicatorsPack {
 		}
 	}
 
-	public double getIntrinsic(boolean isBid, double mult) {
-		long hypotheticalMarketOrderSize = Math.round(mult * avgSize.getAverage());
+	public double getIntrinsic(boolean isBid, int idx) {
+		long hypotheticalMarketOrderSize = Math.round(intrinsicParams[idx] * avgSize.getAverage());
 		double intrinsic = intrinsicPrice.calcIntrinsic(isBid, hypotheticalMarketOrderSize);
 		return intrinsic;
 	}
 
-	public double getEma(long t, boolean isBuy, int index) {
-		double ema = (isBuy ? emaBuy : emaSell)[index].getValue(t);
+	public double getEma(long t, boolean isBuy, int idx) {
+		double ema = (isBuy ? emaBuy : emaSell)[idx].getValue(t);
 		return ema;
 	}
 }

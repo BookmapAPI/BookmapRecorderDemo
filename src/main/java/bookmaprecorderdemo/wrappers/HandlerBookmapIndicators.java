@@ -9,15 +9,13 @@ import bookmaprecorderdemo.utils.IndicatorsPack;
 
 public class HandlerBookmapIndicators extends HandlerBookmapSimple {
 
-	private double probability = 0.3;
-	
+	private double probability = 0.2;
+
 	private final int numIntrinsicIndicators = 10;
-	private double minIntrinsicAverageFactor = 4;
-	private double stepIntrinsicAverageFactor = 4;
-	
+	private final double[] intrinsicParams = generateParams(numIntrinsicIndicators, 4, 1.4);
+
 	private final int numVolumeEmaIndicators = 10;
-	private long minEmaHalfLifeNanoseconds = (long) 5e9;
-	private double stepMultEmaHalfLife = 4;
+	private final double[] emaParams = generateParams(numVolumeEmaIndicators, 1e9, 2);
 
 	private Random rand = new Random();
 	private HashMap<Integer, IndicatorsPack> datas = new HashMap<>();
@@ -51,35 +49,27 @@ public class HandlerBookmapIndicators extends HandlerBookmapSimple {
 	}
 
 	private void initIndicators(long t, int id) throws Exception {
-		datas.put(id, new IndicatorsPack(numVolumeEmaIndicators, minEmaHalfLifeNanoseconds, stepMultEmaHalfLife));
+		datas.put(id, new IndicatorsPack(intrinsicParams, emaParams));
 		int currentIndicatorId = getFirstIndicatorId(id);
 		String alias = instruments.get(id).alias;
 		for (int i = 0; i < numIntrinsicIndicators; i++) {
-			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, 
-					(short) 0xFFFF, (short) 1, 1, Color.WHITE,
-					(short) 0xFF08, (short) 1, 1, 
-					null, 0, 0, true);
+			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, (short) 0xFFFF, (short) 1, 1, Color.WHITE,
+					(short) 0xFF08, (short) 1, 1, null, 0, 0, true);
 			currentIndicatorId++;
 		}
 		for (int i = 0; i < numIntrinsicIndicators; i++) {
-			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, 
-					(short) 0xFFFF, (short) 1, 1, Color.WHITE,
-					(short) 0xFF08, (short) 1, 1, 
-					null, 0, 0, true);
+			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, (short) 0xFFFF, (short) 1, 1, Color.WHITE,
+					(short) 0xFF08, (short) 1, 1, null, 0, 0, true);
 			currentIndicatorId++;
 		}
 		for (int i = 0; i < numVolumeEmaIndicators; i++) {
-			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, 
-					(short) 0xFFFF, (short) 1, 1, new Color(46, 204, 113),
-					(short) 0xFF08, (short) 1, 1, 
-					null, 0, 0, false);
+			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, (short) 0xFFFF, (short) 1, 1,
+					new Color(46, 204, 113), (short) 0xFF08, (short) 1, 1, null, 0, 0, false);
 			currentIndicatorId++;
 		}
 		for (int i = 0; i < numVolumeEmaIndicators; i++) {
-			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, 
-					(short) 0xFFFF, (short) 1, 1, new Color(213, 76, 60),
-					(short) 0xFF08, (short) 1, 1, 
-					null, 0, 0, false);
+			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, (short) 0xFFFF, (short) 1, 1,
+					new Color(213, 76, 60), (short) 0xFF08, (short) 1, 1, null, 0, 0, false);
 			currentIndicatorId++;
 		}
 	}
@@ -92,17 +82,25 @@ public class HandlerBookmapIndicators extends HandlerBookmapSimple {
 			if (rand.nextBoolean()) {
 				boolean isBid = rand.nextBoolean();
 				int idx = rand.nextInt(numIntrinsicIndicators);
-				double mult = minIntrinsicAverageFactor + idx * stepIntrinsicAverageFactor;
-				double intrinsic = instruments.get(id).pips * pack.getIntrinsic(isBid, mult);
+				double intrinsic = instruments.get(id).pips * pack.getIntrinsic(isBid, idx);
 				int indicatorId = firstIndicatorId + (isBid ? 0 : numIntrinsicIndicators) + idx;
 				recorder.onIndicatorPoint(t, indicatorId, intrinsic);
 			} else {
 				int idx = rand.nextInt(numVolumeEmaIndicators);
 				boolean isBuy = rand.nextBoolean();
 				double ema = pack.getEma(t, isBuy, idx);
-				int indicatorId = firstIndicatorId + 2 * numIntrinsicIndicators + (isBuy ? 0 : numVolumeEmaIndicators) + idx;
+				int indicatorId = firstIndicatorId + 2 * numIntrinsicIndicators + (isBuy ? 0 : numVolumeEmaIndicators)
+						+ idx;
 				recorder.onIndicatorPoint(t, indicatorId, ema);
 			}
 		}
+	}
+
+	private static double[] generateParams(int len, double first, double factor) {
+		double[] params = new double[len];
+		for (int i = 0; i < len; i++) {
+			params[i] = first * Math.pow(factor, i);
+		}
+		return params;
 	}
 }

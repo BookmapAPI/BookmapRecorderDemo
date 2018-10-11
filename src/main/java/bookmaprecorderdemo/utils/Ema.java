@@ -5,7 +5,7 @@ public class Ema {
     private Long nanosecondsPrev = null;
     private final double halfLifeFactor;
 
-    public Ema(long halfLifeNanoseconds) {
+    public Ema(double halfLifeNanoseconds) {
         this.halfLifeFactor = -Math.log(2) / halfLifeNanoseconds;
     }
 
