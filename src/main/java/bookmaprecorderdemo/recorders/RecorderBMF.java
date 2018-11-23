@@ -30,7 +30,6 @@ public class RecorderBMF extends DataRecorder {
 		instrDef.alias = instr.symbol;
 		instrDef.id = instr.id;
 		instrDef.pips = 1;
-		instrDef.type = instr.symbol + "@RITHMIC";
 		super.onInstrumentDefinition(t, instrDef);
 	}
 	

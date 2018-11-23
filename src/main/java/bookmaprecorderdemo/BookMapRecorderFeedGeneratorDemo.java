@@ -262,7 +262,8 @@ class IndicatorsManager {
         vwapIndicatorId = nextIndicatorId++;        
         // define custom indicator (session accumulated VWAP)
         // solid white line on the left of timeline, dashed line on the right, no icons
-        recorder.onIndicatorDefinition(time, vwapIndicatorId, alias,
+        recorder.onIndicatorDefinition(
+                time, vwapIndicatorId, alias, "Session accumulated VWAP",
                 (short)0xFFFF, (short)1, 2, Color.WHITE, 
                 (short)0xFF00, (short)1, 2, 
                 null, 0, 0, true);
@@ -280,7 +281,8 @@ class IndicatorsManager {
         largeBuyIndicatorId = nextIndicatorId++;
         // define another custom indicator (icons showing large trades)
         // no lines, icons only; lines color does not matter because pattern is 0
-        recorder.onIndicatorDefinition(time, largeBuyIndicatorId, alias,
+        recorder.onIndicatorDefinition(
+                time, largeBuyIndicatorId, alias, "Large trades buy",
                 (short)0, (short)0, 0, Color.BLACK, 
                 (short)0, (short)0, 0, 
                 arrowDown, -arrowUp.getWidth() / 2, 20, true);
@@ -288,7 +290,8 @@ class IndicatorsManager {
         largeSellIndicatorId = nextIndicatorId++;
         // define another custom indicator (icons showing large trades)
         // no lines, icons only; lines color does not matter because pattern is 0
-        recorder.onIndicatorDefinition(time, largeSellIndicatorId, alias,
+        recorder.onIndicatorDefinition(
+                time, largeSellIndicatorId, alias, "Large trades sell",
                 (short)0, (short)0, 0, Color.BLACK, 
                 (short)0, (short)0, 0, 
                 arrowUp, -arrowUp.getWidth() / 2, -arrowUp.getHeight() - 20, true);

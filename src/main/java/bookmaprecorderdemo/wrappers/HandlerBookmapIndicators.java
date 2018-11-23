@@ -53,22 +53,30 @@ public class HandlerBookmapIndicators extends HandlerBookmapSimple {
 		int currentIndicatorId = getFirstIndicatorId(id);
 		String alias = instruments.get(id).alias;
 		for (int i = 0; i < numIntrinsicIndicators; i++) {
-			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, (short) 0xFFFF, (short) 1, 1, Color.WHITE,
+			recorder.onIndicatorDefinition(
+			        t, currentIndicatorId, alias, "Intrinsic bid #" + i,
+			        (short) 0xFFFF, (short) 1, 1, Color.WHITE,
 					(short) 0xFF08, (short) 1, 1, null, 0, 0, true);
 			currentIndicatorId++;
 		}
 		for (int i = 0; i < numIntrinsicIndicators; i++) {
-			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, (short) 0xFFFF, (short) 1, 1, Color.WHITE,
+			recorder.onIndicatorDefinition(
+			        t, currentIndicatorId, alias, "Intrinsic ask #" + i,
+			        (short) 0xFFFF, (short) 1, 1, Color.WHITE,
 					(short) 0xFF08, (short) 1, 1, null, 0, 0, true);
 			currentIndicatorId++;
 		}
 		for (int i = 0; i < numVolumeEmaIndicators; i++) {
-			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, (short) 0xFFFF, (short) 1, 1,
+			recorder.onIndicatorDefinition(
+			        t, currentIndicatorId, alias, "Volume EMA bid #" + i,
+			        (short) 0xFFFF, (short) 1, 1,
 					new Color(46, 204, 113), (short) 0xFF08, (short) 1, 1, null, 0, 0, false);
 			currentIndicatorId++;
 		}
 		for (int i = 0; i < numVolumeEmaIndicators; i++) {
-			recorder.onIndicatorDefinition(t, currentIndicatorId, alias, (short) 0xFFFF, (short) 1, 1,
+			recorder.onIndicatorDefinition(
+			        t, currentIndicatorId, alias, "Volume EMA ask #" + i, 
+			        (short) 0xFFFF, (short) 1, 1,
 					new Color(213, 76, 60), (short) 0xFF08, (short) 1, 1, null, 0, 0, false);
 			currentIndicatorId++;
 		}
