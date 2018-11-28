@@ -27,6 +27,7 @@ public class HandlerBookmapIndicators extends HandlerBookmapSimple {
 	@Override
 	protected void onDepth(long t, int id, boolean isBuy, long price, long size) throws Exception {
 		super.onDepth(t, id, isBuy, price, size);
+		recorder.onTextData(t, instruments.get(id).alias, price, "Depth update " + price + "=" + size);
 		datas.get(id).onDepth(isBuy, price, size);
 		onEvent(t);
 	}
@@ -93,6 +94,7 @@ public class HandlerBookmapIndicators extends HandlerBookmapSimple {
 				double intrinsic = instruments.get(id).pips * pack.getIntrinsic(isBid, idx);
 				int indicatorId = firstIndicatorId + (isBid ? 0 : numIntrinsicIndicators) + idx;
 				recorder.onIndicatorPoint(t, indicatorId, intrinsic);
+				recorder.onTextData(t, instruments.get(id).alias, intrinsic, "Indicator " + idx + " updated to " + intrinsic);
 			} else {
 				int idx = rand.nextInt(numVolumeEmaIndicators);
 				boolean isBuy = rand.nextBoolean();
@@ -100,6 +102,7 @@ public class HandlerBookmapIndicators extends HandlerBookmapSimple {
 				int indicatorId = firstIndicatorId + 2 * numIntrinsicIndicators + (isBuy ? 0 : numVolumeEmaIndicators)
 						+ idx;
 				recorder.onIndicatorPoint(t, indicatorId, ema);
+				recorder.onTextData(t, instruments.get(id).alias, ema, "Indicator " + indicatorId + " updated to " + ema);
 			}
 		}
 	}
