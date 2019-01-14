@@ -57,28 +57,28 @@ public class HandlerBookmapIndicators extends HandlerBookmapSimple {
 			recorder.onIndicatorDefinition(
 			        t, currentIndicatorId, alias, "Intrinsic bid #" + i,
 			        (short) 0xFFFF, (short) 1, 1, Color.WHITE,
-					(short) 0xFF08, (short) 1, 1, null, 0, 0, true);
+					(short) 0xFF08, (short) 1, 1, null, 0, 0, true, null);
 			currentIndicatorId++;
 		}
 		for (int i = 0; i < numIntrinsicIndicators; i++) {
 			recorder.onIndicatorDefinition(
 			        t, currentIndicatorId, alias, "Intrinsic ask #" + i,
 			        (short) 0xFFFF, (short) 1, 1, Color.WHITE,
-					(short) 0xFF08, (short) 1, 1, null, 0, 0, true);
+					(short) 0xFF08, (short) 1, 1, null, 0, 0, true, null);
 			currentIndicatorId++;
 		}
 		for (int i = 0; i < numVolumeEmaIndicators; i++) {
 			recorder.onIndicatorDefinition(
 			        t, currentIndicatorId, alias, "Volume EMA bid #" + i,
 			        (short) 0xFFFF, (short) 1, 1,
-					new Color(46, 204, 113), (short) 0xFF08, (short) 1, 1, null, 0, 0, false);
+					new Color(46, 204, 113), (short) 0xFF08, (short) 1, 1, null, 0, 0, false, "%6.3e");
 			currentIndicatorId++;
 		}
 		for (int i = 0; i < numVolumeEmaIndicators; i++) {
 			recorder.onIndicatorDefinition(
 			        t, currentIndicatorId, alias, "Volume EMA ask #" + i, 
 			        (short) 0xFFFF, (short) 1, 1,
-					new Color(213, 76, 60), (short) 0xFF08, (short) 1, 1, null, 0, 0, false);
+					new Color(213, 76, 60), (short) 0xFF08, (short) 1, 1, null, 0, 0, false, "%6.3e");
 			currentIndicatorId++;
 		}
 	}

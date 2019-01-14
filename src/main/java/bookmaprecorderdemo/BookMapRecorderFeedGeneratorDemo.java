@@ -266,7 +266,7 @@ class IndicatorsManager {
                 time, vwapIndicatorId, alias, "Session accumulated VWAP",
                 (short)0xFFFF, (short)1, 2, Color.WHITE, 
                 (short)0xFF00, (short)1, 2, 
-                null, 0, 0, true);
+                null, 0, 0, true, null);
         
         // load icons for two next indicators
         BufferedImage arrowUp;
@@ -285,7 +285,7 @@ class IndicatorsManager {
                 time, largeBuyIndicatorId, alias, "Large trades buy",
                 (short)0, (short)0, 0, Color.BLACK, 
                 (short)0, (short)0, 0, 
-                arrowDown, -arrowUp.getWidth() / 2, 20, true);
+                arrowDown, -arrowUp.getWidth() / 2, 20, true, null);
 
         largeSellIndicatorId = nextIndicatorId++;
         // define another custom indicator (icons showing large trades)
@@ -294,7 +294,7 @@ class IndicatorsManager {
                 time, largeSellIndicatorId, alias, "Large trades sell",
                 (short)0, (short)0, 0, Color.BLACK, 
                 (short)0, (short)0, 0, 
-                arrowUp, -arrowUp.getWidth() / 2, -arrowUp.getHeight() - 20, true);
+                arrowUp, -arrowUp.getWidth() / 2, -arrowUp.getHeight() - 20, true, null);
     }
 
     public void onTrade(long time, double price, int size, int aggressor) throws IOException {

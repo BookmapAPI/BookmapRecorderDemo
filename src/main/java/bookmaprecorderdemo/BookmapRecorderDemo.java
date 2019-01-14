@@ -115,19 +115,19 @@ public class BookmapRecorderDemo {
                 currentTime += NS_IN_SEC / 10, 1, "Test instrument 2", "Indicator 1",
                 (short)0xFFFF, (short)1, 1, Color.ORANGE, 
                 (short)0xFF08, (short)1, 2, 
-                icon, -icon.getWidth() / 2, -icon.getHeight() / 2, true);
+                icon, -icon.getWidth() / 2, -icon.getHeight() / 2, true, null);
         // No line, only icons
 //        recorder.onIndicatorDefinition(
 //                currentTime += NS_IN_SEC / 10, 1, "Test instrument 2", "Indicator 1",
 //                (short)0x0000, (short)1, 1, Color.ORANGE,
 //                (short)0x0000, (short)1, 2,
-//                icon, -icon.getWidth() / 2, -icon.getHeight() / 2, true);
+//                icon, -icon.getWidth() / 2, -icon.getHeight() / 2, true, null);
         // No icon, different line style
 //        recorder.onIndicatorDefinition(
 //                currentTime += NS_IN_SEC / 10, 1, "Test instrument 2", "Indicator 1",
 //                (short)0x5555, (short)20, 5, Color.ORANGE,
 //                (short)0x5555, (short)40, 10,
-//                null, 0, 0, true);
+//                null, 0, 0, true, null);
         recorder.onIndicatorPoint(currentTime += NS_IN_SEC / 10, 1, 4440.0);
         recorder.onIndicatorPoint(currentTime += NS_IN_SEC, 1, 4450.0);
         recorder.onIndicatorPoint(currentTime += NS_IN_SEC, 1, Double.NaN);
