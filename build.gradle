@@ -6,8 +6,8 @@ repositories {
 }
 
 dependencies {
-    compile files('lib/BookmapRecorder.jar')
-    compile files('lib/BookmapRecorder-javadoc.jar')
+    implementation files('lib/BookmapRecorder.jar')
+    implementation files('lib/BookmapRecorder-javadoc.jar')
 }
 
 eclipse {
