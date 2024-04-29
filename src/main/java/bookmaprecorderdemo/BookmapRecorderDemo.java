@@ -10,15 +10,12 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import velox.recorder.DataRecorder;
 import velox.recorder.DataRecorderConfiguration;
 import velox.recorder.IRecorder;
 import velox.recorder.InstrumentDefinition;
 import velox.recorder.LicenseException;
-import velox.recorder.Tags;
 import velox.recorder.TagsExt;
 
 public class BookmapRecorderDemo {
@@ -51,6 +48,7 @@ public class BookmapRecorderDemo {
         instrument1.alias = "Test instrument";
         instrument1.id = 1; // Unique instrument ID, it's required later to record events
         instrument1.pips = 25; // So prices will be like 100, 125, 150, 175 ....
+        instrument1.type = "TYPE@RECORDER"; // Type of instruments produced with recorder must end with @RECORDER
         recorder.onInstrumentDefinition(currentTime += 1 * NS_IN_SEC, instrument1);
 
         // And the second instrument is defined at the same point in time
@@ -58,6 +56,7 @@ public class BookmapRecorderDemo {
         instrument2.alias = "Test instrument 2";
         instrument2.id = 2; // Unique instrument ID, it's required later to record events
         instrument2.pips = 10; // So prices will be like 100, 110, 120 ....
+        instrument2.type = "TYPE@RECORDER"; // Type of instruments produced with recorder must end with @RECORDER
         recorder.onInstrumentDefinition(currentTime, instrument2);
 
         currentTime += NS_IN_SEC;
@@ -139,13 +138,6 @@ public class BookmapRecorderDemo {
 
         //  Let's create an order
         recorder.recordNewOrder(currentTime += NS_IN_SEC, "order1", "Test instrument 2", false, 4580, 5);
-        
-        // Let's record order position data. If you comment this out BookMap will compute position using built-in algorithms
-        for (int position = 310 /* 315 is the size on the order's price level, order size is 5, so initially there are 310 shares before our order*/;
-                position > 100; --position) {
-            // Decreasing order position - will look like it advances to the head of the queue
-            recorder.recordOrderQueuePosition(currentTime += NS_IN_SEC / 30, "order1", position);
-        }
         
         // Let's decrease the price
         recorder.recordUpdateOrder(currentTime += NS_IN_SEC, "order1", 4480, 5);
